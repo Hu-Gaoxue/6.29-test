@@ -1,0 +1,32 @@
+//顶级分类-前端
+
+export const topCategory=[
+{
+    id:1,
+    name:'蔬菜'
+},
+{
+    id:2,
+    name:'水果'
+},
+{
+    id:3,
+    name:'干货'
+},
+{
+    id:4,
+    name:'茶饮'
+},
+{
+    id:5,
+    name:'礼品'
+},
+{
+    id:6,
+    name:'面食'
+},
+{
+    id:7,
+    name:'零食'
+},
+]
