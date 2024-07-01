@@ -1,42 +1,43 @@
-<!-- <template>
-    <ul class="app-header-nav">       
-        <li v-for="item in list" :key="item.id">
-            <RouterLink to="/">首页</RouterLink>
-            <div class="layer"><ul>
-                <li v-for="item in 5" :key="item">
-                    <a href="#">
-                        <img src="@/assets/images/veg/秦都红薯.jpg" alt/>
-                    </a>
-                    <div>商品名称</div>
-                </li>
-            </ul></div>
-        </li> -->
-            
-    <!-- </ul>
-</template> -->
-
 <script setup>  
 import { computed } from 'vue';  
 import { useStore } from 'vuex';  
-
+  
 const store = useStore();  
+  
+// 从仓库读取  
 const list = computed(() => {  
   return store.state.category.cateList;  
 });  
+  
+const show = (item) => {  
+  item.open = true;  
+};  
+  
+const hide = (item) => {  
+  item.open = false;  
+};  
 </script>
 
 <template>  
+  
     <ul class="app-header-nav">  
-      <li v-for="item in list" :key="item.id">  
+      <li class="item">
+        <RouterLink class="link" to="/" >首页</RouterLink>  
+      </li>
+
+      <!-- 渲染出来滴 -->
+      <li class="item" v-for="item in list" :key="item.id" 
+      @mouseenter="show(item)" 
+      @mouseleave="hide(item)">  
         <!-- 假设你希望根据 item 的某些属性来动态生成链接 -->  
-        <RouterLink :to="item.link || '/'">{{ item.name || '首页' }}</RouterLink>  
-        <div class="layer">  
+        <RouterLink class="link" :to="'/Category/'+item.id" @click="hide(item)" >{{ item.name  }}</RouterLink>  
+        <div class="layer" :class="{active:item.open}">  
           <ul>  
-            <li v-for="n in 5" :key="n">  
+            <li v-for="ele in item.subCateGroupList" :key="ele.id">  
               <a href="#">  
-                <img src="@/assets/images/veg/秦都红薯.jpg" alt="商品图片" />  
+                <img :src="ele.categoryList[0].bannerUrl" alt="商品图片" />  
               </a>  
-              <div>商品名称</div>  
+              <div>{{ ele.name }}</div>  
             </li>  
           </ul>  
         </div>  
@@ -56,8 +57,9 @@ const list = computed(() => {
 
 <style lang="less" scoped>
 .app-header-nav{
-    li{
-        position: relative;
+    position: relative;
+    .item{
+        
         float: left;
         padding:0 10px;
         font-size: 14px;
@@ -69,27 +71,44 @@ const list = computed(() => {
             color: @xtxColor;
             border-bottom:2px solid;
         }
-        a{
+        .link{
             padding-bottom: 7px;
             font-size:15px;
         }
         //划过
-        a:hover{
-            color: @xtxColor;
-            border-bottom:2px solid;
+        &:hover{
+            .link{
+                color: @xtxColor;
+                border-bottom:2px solid;
+            }
+            .layer{
+                opacity: 0;
+                height: 120px;
+            }
+            .active{
+                opacity: 1;
+            }
         }
     }
     .layer{
         position:absolute;
         left: 0;
-        top: 40px;
+        top: 42px;
+        opacity: 0;
         background-color: #fff;
         box-shadow:0 0 5px #ccc ;
         width: 1100px;
-        height: 130px;
+        height: 0;
+        padding:10px;
+        overflow: hidden;//鼠标悬停在上方才会浮现
+        transition: all 0.5s;
         ul{
+            display: flex;
+
             li{
                 height: 100px;
+                width: 110px;
+                text-align: center;
                 box-sizing: border-box;
                 a{
                     border-bottom: 0;

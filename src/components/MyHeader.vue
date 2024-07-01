@@ -20,7 +20,6 @@
                     <li><a href="#">礼品</a></li>
                     <li><a href="#">面食</a></li>
                     <li><a href="#">零食</a></li>
-
                 </ul>
             </div>
             <div class="cart">
@@ -30,8 +29,6 @@
               </a>  
             </div>
          </div>
-
-
          <!-- 二级导航 -->
           <AppHeaderNav/>
     </div>
